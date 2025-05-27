@@ -1,0 +1,19 @@
+{
+  "0xD34DB33F0000000000000000000000000000B4D": {
+    "risk_level": "High",
+    "incidents": [
+      {
+        "date": "2024-12-02",
+        "summary": "Phishing scam via fake airdrop"
+      },
+      {
+        "date": "2024-12-05",
+        "summary": "Rug pull via liquidity scam"
+      }
+    ]
+  },
+  "0xABADFACECAFEBABE0000000000000000000DEAD": {
+    "risk_level": "Low",
+    "incidents": []
+  }
+}
