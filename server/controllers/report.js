@@ -8,6 +8,13 @@ const createReport = async (req, res) => {
   }
 
   try {
+    const existing = await Report.findOne({ wallet, reason, reporter });
+    if (existing) {
+      return res.status(400).json({
+        error: "You have already submitted this report.",
+      });
+    }
+
     await Report.create({ wallet, reason, reporter });
     res.status(201).json({ message: "Report saved successfully" });
   } catch (err) {

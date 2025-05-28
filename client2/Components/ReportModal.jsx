@@ -57,7 +57,8 @@ export default function ReportModal({ onClose }) {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to submit report");
+        setError(errorData.error || "Failed to submit report");
+        return;
       }
 
       setSuccess("Report submitted successfully");
@@ -70,7 +71,8 @@ export default function ReportModal({ onClose }) {
         onClose();
       }, 1000);
     } catch (e) {
-      console.log(e.message || "Something went wrong");
+      setError(e.message || "Something went wrong");
+      setSuccess(null);
     }
   };
 
@@ -91,7 +93,7 @@ export default function ReportModal({ onClose }) {
 
         <h2 className="text-xl font-semibold mb-4">Report Wallet</h2>
 
-        <form onClick={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="space-y-4 mb-6">
             <div>
               <label
