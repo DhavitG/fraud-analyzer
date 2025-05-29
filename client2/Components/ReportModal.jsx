@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function ReportModal({ onClose }) {
+export default function ReportModal({ onClose, prefilledWallet }) {
   const [reporter, setReporter] = useState("");
   const [wallet, setWallet] = useState("");
   const [reason, setReason] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+
+  useEffect(() => {
+    if (prefilledWallet) {
+      setWallet(prefilledWallet);
+    }
+  }, [prefilledWallet]);
 
   const isValidEmail = (reporter) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reporter);
@@ -124,8 +130,17 @@ export default function ReportModal({ onClose }) {
                 id="wallet"
                 placeholder="0x1234abcd..."
                 value={wallet}
-                onChange={(e) => setWallet(e.target.value)}
-                className="block w-full rounded-md border border-gray-300 p-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                readOnly={!!prefilledWallet}
+                onChange={
+                  !prefilledWallet
+                    ? (e) => setWallet(e.target.value)
+                    : undefined
+                }
+                className={`block w-full rounded-md border p-2 text-gray-900 placeholder-gray-400 ${
+                  prefilledWallet
+                    ? "bg-gray-100 border-gray-200 cursor-not-allowed"
+                    : "border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                }`}
               />
             </div>
 
