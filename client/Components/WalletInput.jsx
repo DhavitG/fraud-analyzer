@@ -52,7 +52,7 @@ export default function WalletInput() {
         </button>
 
         <button
-          className="px-4 py-2 bg-blue-600 text-white rounded shadow-sm hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 cursor-pointer"
+          className="px-4 py-2 bg-blue-600 text-white rounded shadow-sm hover:bg-blue-500 focus:outline-none focus:ring-black focus:ring-offset-2 cursor-pointer"
           onClick={handleReportClick}
         >
           Report
@@ -66,13 +66,19 @@ export default function WalletInput() {
       )}
 
       {/* Risk level / message below */}
-      <div className="mt-6">
-        {showScan &&
-          (riskLevel ? (
-            <RiskLevelBar level={riskLevel} />
-          ) : (
-            <p className="text-red-600">No data found for this wallet.</p>
-          ))}
+      <div className="mt-6 flex flex-col items-center w-full">
+        {showScan && (
+          <>
+            {riskLevel ? (
+              <>
+                <RiskLevelBar level={riskLevel} />
+                <RiskInfo walletAddress={scannedAddress} />
+              </>
+            ) : (
+              <p className="text-red-600">No data found for this wallet.</p>
+            )}
+          </>
+        )}
       </div>
 
       {showModal && (

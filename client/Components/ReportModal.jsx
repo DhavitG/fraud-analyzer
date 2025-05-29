@@ -15,10 +15,12 @@ export default function ReportModal({ onClose, prefilledWallet }) {
 
   const isValidEmail = (reporter) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reporter);
-  const isValidWallet = (wallet) => /^0x[a-fA-F0-9]{40}$/.test(wallet);
+  const isValidWallet = (wallet) => /^0x[a-fA-F0-9]{35,50}$/.test(wallet);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log("Raw wallet input:", wallet);
 
     setError(null);
     setSuccess(null);
@@ -34,6 +36,8 @@ export default function ReportModal({ onClose, prefilledWallet }) {
     }
 
     if (!isValidWallet(wallet)) {
+      console.log("Wallet validation failed for:", wallet);
+
       setError(
         "You cannot report this wallet. Please enter a valid wallet address."
       );
@@ -162,10 +166,8 @@ export default function ReportModal({ onClose, prefilledWallet }) {
             </div>
           </div>
 
-          {/* Error message */}
           {error && <p className="text-red-600 text-sm font-medium">{error}</p>}
 
-          {/* Success message */}
           {success && (
             <p className="text-green-600 text-sm font-medium">{success}</p>
           )}
