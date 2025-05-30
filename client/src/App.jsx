@@ -8,7 +8,7 @@ function App() {
       <Header />
       <div className="flex flex-1">
         <Sidebar />
-        <div className="max-w-6xl mx-auto px-6 flex-grow">
+        <div className="flex-grow">
           <main className="p-8">
             <WalletInput />
           </main>

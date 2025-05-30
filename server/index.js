@@ -13,9 +13,6 @@ const reportRouter = require("./routes/report");
 app.use(express.json());
 
 // routes
-app.get("/", (req, res) => {
-  res.json({ msg: "hi" });
-});
 app.use("/api/risk", riskRouter);
 app.use("/api/report", reportRouter);
 

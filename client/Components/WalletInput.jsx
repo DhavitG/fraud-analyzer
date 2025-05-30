@@ -10,6 +10,7 @@ export default function WalletInput() {
   const [walletAddress, setWalletAddress] = useState("");
   const [scannedAddress, setScannedAddress] = useState(null);
   const [reportError, setReportError] = useState("");
+  const [noDataError, setNoDataError] = useState("");
 
   const closeModal = () => {
     setShowModal(false);
@@ -19,7 +20,7 @@ export default function WalletInput() {
   const handleReportClick = () => {
     if (!walletAddress.trim()) {
       setReportError("Please enter a wallet address before reporting.");
-      setTimeout(() => setReportError(""), 3000); // Clear error after 3 seconds
+      setTimeout(() => setReportError(""), 3000);
       return;
     }
 
@@ -27,12 +28,24 @@ export default function WalletInput() {
     setShowModal(true);
   };
 
+  const handleScanClick = () => {
+    const trimmedAddress = walletAddress.trim();
+    setScannedAddress(trimmedAddress);
+    setShowScan(true);
+    setNoDataError("");
+
+    if (!riskData[trimmedAddress]) {
+      setNoDataError("No data found for this wallet.");
+      setTimeout(() => setNoDataError(""), 3000);
+    }
+  };
+
   const riskLevel = scannedAddress
     ? riskData[scannedAddress]?.risk_level || null
     : null;
 
   return (
-    <div className="h-screen flex flex-col items-center justify-start pt-75">
+    <div className="flex flex-col items-center justify-start pt-75">
       <div className="flex items-center space-x-4">
         <input
           type="text"
@@ -43,10 +56,7 @@ export default function WalletInput() {
         />
         <button
           className="px-4 py-2 bg-black text-white rounded shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 cursor-pointer"
-          onClick={() => {
-            setScannedAddress(walletAddress.trim());
-            setShowScan(true);
-          }}
+          onClick={handleScanClick}
         >
           Scan
         </button>
@@ -65,7 +75,6 @@ export default function WalletInput() {
         </div>
       )}
 
-      {/* Risk level / message below */}
       <div className="mt-6 flex flex-col items-center w-full">
         {showScan && (
           <>
@@ -75,7 +84,7 @@ export default function WalletInput() {
                 <RiskInfo walletAddress={scannedAddress} />
               </>
             ) : (
-              <p className="text-red-600">No data found for this wallet.</p>
+              noDataError && <p className="text-red-600">{noDataError}</p>
             )}
           </>
         )}
