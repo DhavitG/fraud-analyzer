@@ -113,6 +113,9 @@ curl -X POST https://fraud-analyzer-backend.onrender.com/api/report \
 4. Push to branch: `git push origin feat/new-feature`
 5. Open Pull Request
 
+## Part 2
+- Created a second branch to add further functionalities. (might merge)
+
 ## License
 MIT - See [LICENSE](LICENSE) for details
 
