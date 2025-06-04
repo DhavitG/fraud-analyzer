@@ -1,8 +1,11 @@
+const {adminAuth} = require("../middlewares/auth")
+
 const { Router } = require("express");
 const router = Router();
 
-const { createReport } = require("../controllers/report");
+const { createReport, getAllReports } = require("../controllers/report");
 
-router.post("/", createReport);
+router.post("/",adminAuth, createReport);
+router.get("/all",adminAuth, getAllReports)
 
 module.exports = router;

@@ -1,5 +1,5 @@
 const Report = require("../model/report");
-
+ 
 const createReport = async (req, res) => {
   const { wallet, reason, reporter } = req.body;
 
@@ -13,7 +13,7 @@ const createReport = async (req, res) => {
       return res.status(400).json({
         error: "You have already submitted this report.",
       });
-    }
+    } 
 
     await Report.create({ wallet, reason, reporter });
     res.status(201).json({ message: "Report saved successfully" });
@@ -23,6 +23,18 @@ const createReport = async (req, res) => {
   }
 };
 
+const getAllReports = async (req, res) => {
+  try {
+    const reports = await Report.find()
+    res.status(200).json(reports)
+  } catch(e) {
+    console.error('Error fetching reports:', e.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+
+}
+
 module.exports = {
   createReport,
+  getAllReports
 };
